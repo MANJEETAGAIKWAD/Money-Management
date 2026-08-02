@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Management | Financial Dashboard</title>
+    <meta name="description"
+        content="Personal finance and wealth dashboard created and maintained by Manjeet Gaikwad.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo" id="brand-logo">
+                    <img src="assets/logo.png" alt="Money Management Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-icon" style="display:none;"><i class="fa-solid fa-vault"></i></div>
+                    <div class="logo-text">
+                        <h2>Money Management</h2>
+                        <span>FINANCIAL DASHBOARD</span>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active" id="nav-dashboard"><a href="#"><i class="fa-solid fa-border-all"></i> Overview</a></li>
+                    <li id="nav-transactions"><a href="#"><i class="fa-solid fa-receipt"></i> Transactions</a></li>
+                    <li id="nav-budgets"><a href="#"><i class="fa-solid fa-piggy-bank"></i> Budgets</a></li>
+                    <li id="nav-analytics"><a href="#"><i class="fa-solid fa-chart-line"></i> Analytics</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-action">
+                <button class="btn-primary" id="open-add-transaction-btn"><i class="fa-solid fa-plus"></i> Add Transaction</button>
+            </div>
+            <div class="sidebar-footer">
+                <ul>
+                    <li id="edit-profile-trigger"><a href="#"><i class="fa-solid fa-sliders"></i> Edit Profile</a></li>
+                    <li><a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <h1 class="page-title" id="page-title-heading">Overview</h1>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="global-search-input" placeholder="Search entries, categories...">
+                    </div>
+                    <button class="icon-btn" aria-label="Notifications"><i class="fa-regular fa-bell"></i></button>
+                    <button class="icon-btn" id="settings-btn" aria-label="Settings"><i class="fa-solid fa-gear"></i></button>
+                    <div class="user-profile" id="user-profile-widget">
+                        <img src="https://ui-avatars.com/api/?name=Jeet&background=22C55E&color=000000" id="header-avatar" alt="User Profile">
+                        <div class="user-info">
+                            <span class="user-name" id="header-user-name">Jeet</span>
+                            <span class="user-role" id="header-user-role">Actor / Mumbai</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Smart Alert Container -->
+            <div id="smart-alert-container"></div>
+
+            <!-- DASHBOARD TAB CONTENT -->
+            <div class="tab-content active" id="tab-dashboard">
+                <div class="dashboard-grid">
+                    <!-- Overview Section -->
+                    <section class="overview-section">
+                        <!-- Balance Overview Card -->
+                        <div class="card balance-card">
+                            <div class="card-header space-between">
+                                <h3 class="card-title">Monthly Income</h3>
+                                <button class="text-btn" id="edit-income-quick-btn"><i class="fa-solid fa-pen"></i> Edit</button>
+                            </div>
+                            <div class="balance-amount">₹50,000.00</div>
+                            <p class="balance-subtitle">Post-tax Net Income</p>
+
+                            <div class="account-summaries">
+                                <div class="account-box">
+                                    <div class="account-header">
+                                        <i class="fa-solid fa-money-bill-wave" style="color: var(--color-green)"></i>
+                                        <span>Target Savings</span>
+                                    </div>
+                                    <div class="account-value green-amount">₹10,000.00</div>
+                                </div>
+                                <div class="account-box">
+                                    <div class="account-header">
+                                        <i class="fa-solid fa-credit-card" style="color: var(--color-red)"></i>
+                                        <span>Fixed Expenses</span>
+                                    </div>
+                                    <div class="account-value red-amount">₹21,500.00</div>
+                                </div>
+                                <div class="account-box">
+                                    <div class="account-header">
+                                        <i class="fa-solid fa-basket-shopping" style="color: var(--color-red)"></i>
+                                        <span>Lifestyle Spend</span>
+                                    </div>
+                                    <div class="account-value red-amount">₹18,500.00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wealth Forecast Card -->
+                        <div class="card quick-actions-card dark-card">
+                            <div class="card-header space-between">
+                                <div>
+                                    <h3 class="card-title">Wealth Forecast</h3>
+                                    <p class="text-gray" id="cagr-subtitle">Projected portfolio value after 12 months (12% CAGR).</p>
+                                </div>
+                                <button class="icon-btn-small" id="edit-investment-btn" title="Edit Investments"><i class="fa-solid fa-sliders"></i></button>
+                            </div>
+                            <div class="forecast-value" id="wealth-forecast-val">₹0.00</div>
+                            <div class="action-list">
+                                <div class="action-item">
+                                    <div class="action-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                                    <div class="action-details">
+                                        <span>Mutual Funds (SIP)</span>
+                                        <strong id="mf-display-val">₹3,000/mo</strong>
+                                    </div>
+                                </div>
+                                <div class="action-item">
+                                    <div class="action-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                                    <div class="action-details">
+                                        <span>Stock Market/Equity</span>
+                                        <strong id="stocks-display-val">₹2,000/mo</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Detailed Grids -->
+                    <div class="details-grid">
+                        <!-- Left Column -->
+                        <div class="column-left">
+                            <!-- Budget Categories -->
+                            <div class="card">
+                                <div class="card-header space-between">
+                                    <h3 class="card-title">Expense Categories</h3>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button class="text-btn" id="open-add-category-btn"><i class="fa-solid fa-plus"></i> Add Category</button>
+                                        <button class="text-btn" id="edit-limits-btn"><i class="fa-solid fa-pen"></i> Edit Limits</button>
+                                    </div>
+                                </div>
+
+                                <div class="category-list" id="budget-categories">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Dry Spell Simulator -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Runway Simulator</h3>
+                                    <p class="text-sm">Calculate how long emergency funds will last without active income.</p>
+                                </div>
+                                <div class="simulator-controls">
+                                    <label for="no-income-months">Months without income:</label>
+                                    <div class="range-container">
+                                        <input type="range" id="no-income-months" min="1" max="12" value="2">
+                                        <span id="simulator-month-display">2 Months</span>
+                                    </div>
+                                </div>
+                                <div class="simulator-results">
+                                    <div class="result-box">
+                                        <span>Required Cushion</span>
+                                        <strong id="sim-required">₹0</strong>
+                                    </div>
+                                    <div class="result-box highlighted">
+                                        <span>Current Status</span>
+                                        <strong id="sim-status">Sufficient</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="column-right">
+                            <!-- Expense to Income Ratio -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Expense vs Savings Ratio</h3>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="ratioChart"></canvas>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-item">
+                                        <span class="dot color-expense"></span>
+                                        <span>Expenses</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="dot color-savings"></span>
+                                        <span>Savings & Investments</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Savings Goals -->
+                            <div class="card">
+                                <div class="card-header space-between">
+                                    <h3 class="card-title">Savings Goals</h3>
+                                    <button class="icon-btn-small" id="open-add-goal-btn" aria-label="Add goal"><i class="fa-solid fa-plus"></i></button>
+                                </div>
+
+                                <div class="goals-container" id="goals-list-container">
+                                    <!-- Goals populated dynamically by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRANSACTIONS TAB CONTENT -->
+            <div class="tab-content" id="tab-transactions">
+                <div class="card">
+                    <div class="card-header space-between">
+                        <div>
+                            <h3 class="card-title">Recent Transactions</h3>
+                            <p class="text-sm">Manage, add, and filter financial ledger entries.</p>
+                        </div>
+                        <button class="btn-primary" id="open-add-transaction-btn-2"><i class="fa-solid fa-plus"></i> Add Transaction</button>
+                    </div>
+                    <div class="transaction-table-container">
+                        <table class="transaction-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transaction-table-body">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUDGETS TAB CONTENT -->
+            <div class="tab-content" id="tab-budgets">
+                <div class="card">
+                    <div class="card-header space-between">
+                        <div>
+                            <h3 class="card-title">Budget Allocations</h3>
+                            <p class="text-sm">Customize monthly thresholds for spending categories.</p>
+                        </div>
+                        <button class="btn-primary" id="open-add-category-btn-2"><i class="fa-solid fa-plus"></i> New Category</button>
+                    </div>
+                    <div class="category-list" id="budget-tab-categories">
+                        <!-- Budget categories manager list -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANALYTICS TAB CONTENT -->
+            <div class="tab-content" id="tab-analytics">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Wealth Growth Projections</h3>
+                        <p class="text-sm">Compound interest trajectories and investment velocity.</p>
+                    </div>
+                    <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                        <div class="result-box highlighted">
+                            <span>1-Year SIP Portfolio</span>
+                            <strong id="analytics-1y">₹0</strong>
+                        </div>
+                        <div class="result-box highlighted">
+                            <span>3-Year Compound Wealth</span>
+                            <strong id="analytics-3y">₹0</strong>
+                        </div>
+                        <div class="result-box highlighted">
+                            <span>5-Year Compound Wealth</span>
+                            <strong id="analytics-5y">₹0</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Visual Footer -->
+            <footer class="dashboard-footer">
+                <div class="footer-brand">
+                    <img src="assets/logo.png" alt="Money Management Logo" class="footer-logo" onerror="this.style.display='none';">
+                    <span>Created & Maintained by Manjeet Gaikwad</span>
+                </div>
+                <div class="footer-meta">
+                    <span>v2.4 Pro</span> • <span>Encrypted</span>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Edit Profile & Settings Modal -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Financial Profile Settings</h2>
+                <button class="icon-btn" id="close-modal-btn" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="settings-form">
+                    <div class="form-section">
+                        <h3>Profile Details</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-user-name">User Name</label>
+                                <input type="text" id="input-user-name" required placeholder="Jeet">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-user-role">Role / Description</label>
+                                <input type="text" id="input-user-role" required placeholder="Actor / Mumbai">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Income</h3>
+                        <div class="form-group">
+                            <label for="input-income">Monthly Income (₹)</label>
+                            <input type="number" id="input-income" required min="0">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Fixed Expense Limits</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-fixed">Fixed Essentials (Rent, Utils)</label>
+                                <input type="number" id="input-fixed" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-food">Food & Outings</label>
+                                <input type="number" id="input-food" required min="0">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-cosmetics">Cosmetics & Grooming</label>
+                                <input type="number" id="input-cosmetics" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-clothing">Clothing & Fashion</label>
+                                <input type="number" id="input-clothing" required min="0">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-transport">Transport</label>
+                                <input type="number" id="input-transport" required min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Emergency Fund Settings</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-ef-target">Target Fund Goal (₹)</label>
+                                <input type="number" id="input-ef-target" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-ef-current">Current Emergency Saved (₹)</label>
+                                <input type="number" id="input-ef-current" required min="0">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-ef-monthly">Emergency Monthly Contribution (₹)</label>
+                                <input type="number" id="input-ef-monthly" required min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Investments & Return Rate</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-mf">Mutual Funds Monthly (₹)</label>
+                                <input type="number" id="input-mf" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-stocks">Stocks Monthly (₹)</label>
+                                <input type="number" id="input-stocks" required min="0">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-cagr">Expected Annual Return % (CAGR)</label>
+                                <input type="number" id="input-cagr" required min="1" max="100" value="12">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" id="cancel-btn">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add New Transaction Modal -->
+    <div class="modal-overlay" id="add-transaction-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Add New Transaction</h2>
+                <button class="icon-btn" id="close-tx-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-transaction-form">
+                    <div class="form-group">
+                        <label for="tx-title">Transaction Description</label>
+                        <input type="text" id="tx-title" placeholder="e.g. Commercial Audition Payment" required>
+                    </div>
+                    <div class="form-row" style="margin-top: 14px;">
+                        <div class="form-group">
+                            <label for="tx-amount">Amount (₹)</label>
+                            <input type="number" id="tx-amount" placeholder="5000" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="tx-type">Transaction Type</label>
+                            <select id="tx-type" required>
+                                <option value="expense">Expense</option>
+                                <option value="income">Income</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-top: 14px;">
+                        <div class="form-group">
+                            <label for="tx-category">Category</label>
+                            <select id="tx-category" required>
+                                <option value="Housing & Utilities">Housing & Utilities</option>
+                                <option value="Food & Outings">Food & Outings</option>
+                                <option value="Cosmetics & Grooming">Cosmetics & Grooming</option>
+                                <option value="Clothing & Fashion">Clothing & Fashion</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Investments">Investments</option>
+                                <option value="Salary & Acting Income">Salary & Acting Income</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tx-date">Date</label>
+                            <input type="date" id="tx-date" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: 20px;">
+                        <button type="button" class="btn-secondary" id="cancel-tx-btn">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Custom Savings Goal Modal -->
+    <div class="modal-overlay" id="add-goal-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Create Savings Goal</h2>
+                <button class="icon-btn" id="close-goal-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-goal-form">
+                    <div class="form-group">
+                        <label for="goal-title">Goal Name</label>
+                        <input type="text" id="goal-title" placeholder="e.g. Portfolio Shoot & Equipment" required>
+                    </div>
+                    <div class="form-row" style="margin-top: 14px;">
+                        <div class="form-group">
+                            <label for="goal-target">Target Amount (₹)</label>
+                            <input type="number" id="goal-target" placeholder="100000" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="goal-saved">Current Saved (₹)</label>
+                            <input type="number" id="goal-saved" placeholder="25000" required min="0">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 14px;">
+                        <label for="goal-monthly">Monthly Contribution (₹)</label>
+                        <input type="number" id="goal-monthly" placeholder="5000" required min="0">
+                    </div>
+                    <div class="modal-footer" style="margin-top: 20px;">
+                        <button type="button" class="btn-secondary" id="cancel-goal-btn">Cancel</button>
+                        <button type="submit" class="btn-primary">Create Goal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Custom Category Modal -->
+    <div class="modal-overlay" id="add-category-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Add Budget Category</h2>
+                <button class="icon-btn" id="close-cat-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-category-form">
+                    <div class="form-group">
+                        <label for="cat-name-input">Category Name</label>
+                        <input type="text" id="cat-name-input" placeholder="e.g. Submissions & Auditions" required>
+                    </div>
+                    <div class="form-group" style="margin-top: 14px;">
+                        <label for="cat-desc-input">Description</label>
+                        <input type="text" id="cat-desc-input" placeholder="e.g. Casting director fees & studio rents" required>
+                    </div>
+                    <div class="form-row" style="margin-top: 14px;">
+                        <div class="form-group">
+                            <label for="cat-spent-input">Current Spent (₹)</label>
+                            <input type="number" id="cat-spent-input" placeholder="2000" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="cat-total-input">Budget Limit (₹)</label>
+                            <input type="number" id="cat-total-input" placeholder="5000" required min="1">
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: 20px;">
+                        <button type="button" class="btn-secondary" id="cancel-cat-btn">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Application Logic -->
+    <script src="script.js"></script>
+</body>
+
+</html>

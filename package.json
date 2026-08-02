@@ -1,0 +1,18 @@
+{
+  "name": "money-management",
+  "version": "2.4.0",
+  "description": "Wealth Dashboard",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static site ready'",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "money-management",
+    "finance",
+    "dashboard",
+    "wealth"
+  ],
+  "author": "Manjeet Gaikwad",
+  "license": "ISC"
+}
